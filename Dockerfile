@@ -6,6 +6,7 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt
 
 COPY templates templates
+COPY static static
 COPY app.py .
 COPY run.sh .
 

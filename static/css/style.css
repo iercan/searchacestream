@@ -1,0 +1,16 @@
+.tick {
+    display: none;
+}
+.success .tick { 
+    display: inline;
+}
+.flex {
+    display: flex;
+    flex-wrap: nowrap; /* Prevent the items from wrapping to a new line */
+    gap: 8px; /* Adjust space between buttons */
+}
+
+.items-center {
+    align-items: center; /* Align items vertically centered */
+}
+
