@@ -1,0 +1,12 @@
+networks:
+  nginx_network:
+    external: true
+
+services:
+  acesearch:
+    networks:
+      - nginx_network
+    build: .
+    container_name: acesearch
+    environment: 
+      - ENGINE_URL=http://acestreamengine:6878

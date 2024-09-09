@@ -1,0 +1,153 @@
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>Ace Stream Broadcast Search</title>  
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>  
+        .tick {  
+            display: none;  
+        }  
+        .success .tick {  
+            display: inline;  
+        }  
+    </style>
+</head>  
+<body class="flex items-center justify-center h-screen bg-gray-100"> 
+    <div style="overflow: auto; height: 100%; width: auto;">
+        <form id="searchForm" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">  
+            <div class="mb-4">  
+                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="query" type="text" placeholder="Search ace streams...">
+            </div>  
+            <div class="flex items-center justify-between">  
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">  
+                    Search  
+                </button>  
+            </div>  
+        </form>  
+        <div id="results" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" style="overflow: auto;">  
+            <table class="min-w-full">  
+                <thead>  
+                    <tr>  
+                        <th class="px-6 py-3 border-b-2 border-gray-300 text-left leading-4 text-blue-500 tracking-wider">Name</th>  
+                        <th class="px-6 py-3 border-b-2 border-gray-300 text-left leading-4 text-blue-500 tracking-wider">Availability</th>  
+                        <th class="px-6 py-3 border-b-2 border-gray-300 text-left leading-4 text-blue-500 tracking-wider">Status</th>  
+                        <th class="px-6 py-3 border-b-2 border-gray-300 text-left leading-4 text-blue-500 tracking-wider">Languages</th>
+                        <th class="px-6 py-3 border-b-2 border-gray-300 text-left leading-4 text-blue-500 tracking-wider">Content ID</th>
+                    </tr>  
+                </thead>  
+                <tbody id="resultsBody">  
+                    <!-- Results will be inserted here -->  
+                </tbody>  
+            </table>
+            <div class="bg-white">
+                <span class="text-xs">
+       * This website is designed solely to search for active Ace Stream broadcasts and is not involved in streaming them.
+                </span>
+            </div>
+        </div>  
+    </div>  
+    <script>
+        function refresh_listeners(){
+            let buttons = document.querySelectorAll(".copy_button");
+
+            buttons.forEach(function(elem) {
+                console.log(elem);
+                elem.addEventListener("click", function(event) {
+                    console.log(elem);
+                    event.preventDefault();
+                    const infohash = elem.getAttribute('data-infohash');
+                    fetch('/get_content_id', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: `infohash=${infohash}`
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        let textToCopy = '';
+                        let pid = 1;
+                        let buttonType = elem.getAttribute('data-type');
+                        if (buttonType == "network"){
+                            pid = Math.floor(Math.random() * 10000) + 1;
+                            textToCopy = "http://127.0.0.1:6878/ace/getstream?id=" + data.content_id + "&pid=" + pid;
+                        }
+                        else if (buttonType == "open"){
+
+                            window.open("acestream://" + data.content_id, '_blank');
+                            return;
+                            
+                        }
+                        else{
+                            textToCopy = data.content_id;
+                        }
+                        navigator.clipboard.writeText(textToCopy)
+                            .then(() => {
+                                elem.classList.add('success');
+                                setTimeout(() => {
+                                    elem.classList.remove('success');
+                                }, 2000); // Reset after 2 seconds
+                            })
+                            .catch(err => {
+                                console.error('Failed to copy text: ', err);
+                            });
+                        //const resultsBody = elem.parentElement;
+                        //resultsBody.innerHTML = data.content_id;
+                    });
+                });
+            });
+        }
+        document.getElementById('searchForm').addEventListener('submit', function(event) {  
+            event.preventDefault();  
+            const query = document.getElementById('query').value;  
+            fetch('/search', {  
+                method: 'POST',  
+                headers: {  
+                    'Content-Type': 'application/x-www-form-urlencoded',  
+                },  
+                body: `query=${query}`  
+            })  
+            .then(response => response.json())  
+            .then(data => {  
+                const resultsBody = document.getElementById('resultsBody');  
+                resultsBody.innerHTML = '';
+                if(data.length === 0) {
+                    resultsBody.innerHTML = 'No results';
+                    return;
+                }
+                data.forEach(result => {  
+                    const statusIcon = result.status === 2 ? 'Active' : 'Unstable';
+                    const row = `<tr>  
+                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">${result.name}</td>  
+                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">${result.availability}</td>  
+                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">${statusIcon}</td>  
+                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">${result.languages}</td>
+                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
+                            <button class="copy_button bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline"
+                                    data-infohash="${result.infohash}" data-type="open"
+                                    type="submit">
+                                    Open
+                            </button>
+                            <button class="copy_button bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline"
+                                    data-infohash="${result.infohash}" data-type="content-id"
+                                    type="submit">
+                                    Copy<span class='tick'>✔</span>
+                            </button>
+                            <button class="copy_button bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline"
+                                    data-infohash="${result.infohash}" data-type="network"
+                                    type="submit">
+                                    Copy as URL<span class='tick'>✔</span>
+                            </button>
+                         </td>
+                    </tr>`;  
+                    resultsBody.innerHTML += row;  
+                });
+                refresh_listeners();
+            });  
+        });  
+    </script>  
+</body>  
+</html>  
+
