@@ -18,12 +18,15 @@
     <i class="fa-lg fa-brands fa-github"></i>
     </a></div>
     <div style="overflow: auto; height: 100%; width: auto;">
+        <div class="flex place-items-center justify-center">
+            <img style="height: 200px; width: 200px;" src="{{ url_for('static', filename='images/icon.png') }}" alt="Ace Stream Searcher">
+        </div>
         <form id="searchForm" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">  
             <div class="mb-4" style=" width: 70%;  float: left;padding: 10px;">  
                 <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="query" type="text" placeholder="Search ace streams...">
             </div>  
             <div class="flex items-center justify-between" style="padding:10px;">  
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded focus:outline-none focus:shadow-outline" type="submit">  
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded focus:outline-none focus:shadow-outline" style="width: 100%;" type="submit">  
                     Search  
                 </button>  
             </div>  
