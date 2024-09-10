@@ -13,4 +13,7 @@
 .items-center {
     align-items: center; /* Align items vertically centered */
 }
-
+.action_icon {
+     cursor: pointer;
+     color: skyblue;
+}

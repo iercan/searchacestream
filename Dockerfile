@@ -5,10 +5,10 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
-COPY templates templates
-COPY static static
-COPY app.py .
 COPY run.sh .
+COPY app.py .
+COPY static static
+COPY templates templates
 
 
 ENV ENGINE_URL=http://127.0.0.1:6878

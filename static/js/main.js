@@ -1,6 +1,6 @@
 
 function refresh_listeners(){
-    let buttons = document.querySelectorAll(".copy_button");
+    let buttons = document.querySelectorAll(".action_icon");
 
     buttons.forEach(function(elem) {
         console.log(elem);
@@ -35,9 +35,10 @@ function refresh_listeners(){
                     }
                     navigator.clipboard.writeText(textToCopy)
                         .then(() => {
-                            elem.classList.add('success');
+                            let icon_elem = elem.getElementsByTagName("i")[0]
+                            icon_elem.classList.add('fa-check');
                             setTimeout(() => {
-                                elem.classList.remove('success');
+                                icon_elem.classList.remove('fa-check');
                             }, 2000); // Reset after 2 seconds
                         })
                         .catch(err => {
@@ -75,21 +76,15 @@ document.getElementById('searchForm').addEventListener('submit', function(event)
                         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">${statusIcon}</td>
                         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">${result.languages}</td>
                         <td class="flex items-center px-6 py-4 whitespace-no-wrap border-b border-gray-500">
-                            <button class="copy_button bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline"
-                                    data-infohash="${result.infohash}" data-type="open"
-                                    type="submit">
-                                    Open
-                            </button>
-                            <button class="copy_button bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline"
-                                    data-infohash="${result.infohash}" data-type="content-id"
-                                    type="submit">
-                                    Copy<span class='tick'>✔</span>
-                            </button>
-                            <button class="copy_button bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline"
-                                    data-infohash="${result.infohash}" data-type="network"
-                                    type="submit">
-                                    Copy as URL<span class='tick'>✔</span>
-                            </button>
+                            <span title="Play channel" data-infohash="${result.infohash}" data-type="open" class=" action_icon py-1 px-2 rounded focus:outline-none focus:shadow-outline">
+                                <i class="fa-lg fa-solid fa-circle-play"></i>
+                            </span>
+                            <span title="Copy content id to clipboard" data-infohash="${result.infohash}" data-type="copy" class=" action_icon py-1 px-2 rounded focus:outline-none focus:shadow-outline">
+                                <i class="fa-lg fa-solid fa-clipboard"></i>
+                            </span>
+                            <span title="Copy network url for local media players" data-infohash="${result.infohash}" data-type="network" class=" action_icon py-1 px-2 rounded focus:outline-none focus:shadow-outline">
+                                <i class="fa-lg fa-solid fa-file-video"></i>
+                            </span>
                          </td>
                     </tr>`;
                 resultsBody.innerHTML += row;
