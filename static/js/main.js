@@ -64,7 +64,9 @@ document.getElementById('searchForm').addEventListener('submit', function(event)
     })
         .then(response => response.json())
         .then(data => {
-            const resultsBody = document.getElementById('resultsBody');
+            const resultsBody = document.getElementById('results-body');
+            const resultTable = document.getElementById('results-table');
+            resultTable.hidden = false;
             resultsBody.innerHTML = '';
             if(data.length === 0) {
                 resultsBody.innerHTML = 'No results';
@@ -76,7 +78,7 @@ document.getElementById('searchForm').addEventListener('submit', function(event)
                         <td class="px-3 py-4 whitespace-no-wrap border-b border-gray-500">${result.name}</td>
                         <td class="px-3 py-4 whitespace-no-wrap border-b border-gray-500">${statusIcon}</td>
                         <td class="px-3 py-4 whitespace-no-wrap border-b border-gray-500">${result.languages}</td>
-                        <td class="px-3 py-4 whitespace-no-wrap border-b border-gray-500">
+                        <td class="px-3 py-4 whitespace-no-wrap border-b border-gray-500 flex flex-col sm:flex-row sm:space-x-2">
                             <span title="Play channel" data-infohash="${result.infohash}" data-type="open" class=" action_icon py-1 px-2 rounded focus:outline-none focus:shadow-outline">
                                 <i class="fa-lg fa-solid fa-circle-play"></i>
                             </span>
