@@ -20,9 +20,11 @@ function refresh_listeners(){
                     let textToCopy = '';
                     let pid = 1;
                     let buttonType = elem.getAttribute('data-type');
+                    let orig_icon_class = 'fa-clipboard';
                     if (buttonType == "network"){
                         pid = Math.floor(Math.random() * 10000) + 1;
                         textToCopy = "http://127.0.0.1:6878/ace/getstream?id=" + data.content_id + "&pid=" + pid;
+                        orig_icon_class = 'fa-file-video'
                     }
                     else if (buttonType == "open"){
 
@@ -36,9 +38,11 @@ function refresh_listeners(){
                     navigator.clipboard.writeText(textToCopy)
                         .then(() => {
                             let icon_elem = elem.getElementsByTagName("i")[0]
-                            icon_elem.classList.add('fa-check');
+                            icon_elem.classList.remove(orig_icon_class);
+                            icon_elem.classList.add('fa-clipboard-check');
                             setTimeout(() => {
-                                icon_elem.classList.remove('fa-check');
+                                icon_elem.classList.remove('fa-clipboard-check');
+                                icon_elem.classList.add(orig_icon_class);
                             }, 2000); // Reset after 2 seconds
                         })
                         .catch(err => {
@@ -72,10 +76,9 @@ document.getElementById('searchForm').addEventListener('submit', function(event)
                 const statusIcon = result.status === 2 ? 'Active' : 'Unstable';
                 const row = `<tr>
                         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">${result.name}</td>
-                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">${result.availability}</td>
                         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">${statusIcon}</td>
                         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">${result.languages}</td>
-                        <td class="flex items-center px-6 py-4 whitespace-no-wrap border-b border-gray-500">
+                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
                             <span title="Play channel" data-infohash="${result.infohash}" data-type="open" class=" action_icon py-1 px-2 rounded focus:outline-none focus:shadow-outline">
                                 <i class="fa-lg fa-solid fa-circle-play"></i>
                             </span>
