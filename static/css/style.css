@@ -17,3 +17,8 @@
      cursor: pointer;
      color: slategray;
 }
+
+body {
+    font-family: monospace;
+
+}
