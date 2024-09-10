@@ -7,7 +7,7 @@
     <meta name="description" content="Easily search and discover Ace Stream broadcasts with our user-friendly platform. Find and access content IDs for your favorite live streams and enjoy seamless streaming experiences. Start exploring now!">  
     
     <link rel="icon" href="{{ url_for('static', filename='images/favicon.png') }}" type="image/png">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tailwind.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='fontawesome/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
@@ -23,7 +23,7 @@
                 <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="query" type="text" placeholder="Search ace streams...">
             </div>  
             <div class="flex items-center justify-between" style="padding:10px;">  
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">  
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded focus:outline-none focus:shadow-outline" type="submit">  
                     Search  
                 </button>  
             </div>  
@@ -32,10 +32,10 @@
             <table class="min-w-full">  
                 <thead>  
                     <tr>  
-                        <th class="px-6 py-3 border-b-2 border-gray-300 text-left leading-4 text-blue-500 tracking-wider">Name</th>  
-                        <th class="px-6 py-3 border-b-2 border-gray-300 text-left leading-4 text-blue-500 tracking-wider">Status</th>  
-                        <th class="px-6 py-3 border-b-2 border-gray-300 text-left leading-4 text-blue-500 tracking-wider">Languages</th>
-                        <th class="px-6 py-3 border-b-2 border-gray-300 text-left leading-4 text-blue-500 tracking-wider">Content ID</th>
+                        <th class="px-3 py-3 border-b-2 border-gray-300 text-left leading-4 text-blue-500 tracking-wider">Name</th>  
+                        <th class="px-3 py-3 border-b-2 border-gray-300 text-left leading-4 text-blue-500 tracking-wider">Status</th>  
+                        <th class="px-3 py-3 border-b-2 border-gray-300 text-left leading-4 text-blue-500 tracking-wider">Languages</th>
+                        <th class="px-3 py-3 border-b-2 border-gray-300 text-left leading-4 text-blue-500 tracking-wider">Content ID</th>
                     </tr>  
                 </thead>  
                 <tbody id="resultsBody">  

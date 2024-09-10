@@ -3,9 +3,7 @@ function refresh_listeners(){
     let buttons = document.querySelectorAll(".action_icon");
 
     buttons.forEach(function(elem) {
-        console.log(elem);
         elem.addEventListener("click", function(event) {
-            console.log(elem);
             event.preventDefault();
             const infohash = elem.getAttribute('data-infohash');
             fetch('/get_content_id', {
@@ -75,10 +73,10 @@ document.getElementById('searchForm').addEventListener('submit', function(event)
             data.forEach(result => {
                 const statusIcon = result.status === 2 ? 'Active' : 'Unstable';
                 const row = `<tr>
-                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">${result.name}</td>
-                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">${statusIcon}</td>
-                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">${result.languages}</td>
-                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
+                        <td class="px-3 py-4 whitespace-no-wrap border-b border-gray-500">${result.name}</td>
+                        <td class="px-3 py-4 whitespace-no-wrap border-b border-gray-500">${statusIcon}</td>
+                        <td class="px-3 py-4 whitespace-no-wrap border-b border-gray-500">${result.languages}</td>
+                        <td class="px-3 py-4 whitespace-no-wrap border-b border-gray-500">
                             <span title="Play channel" data-infohash="${result.infohash}" data-type="open" class=" action_icon py-1 px-2 rounded focus:outline-none focus:shadow-outline">
                                 <i class="fa-lg fa-solid fa-circle-play"></i>
                             </span>
