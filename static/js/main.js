@@ -74,7 +74,6 @@ document.getElementById('searchForm').addEventListener('submit', function(event)
             resultsBody.innerHTML = '';
             if(data.length === 0) {
                 resultsBody.innerHTML = 'No results';
-                return;
             }
             data.forEach(result => {
                 const statusIcon = result.status === 2 ? 'Active' : 'Unstable';
