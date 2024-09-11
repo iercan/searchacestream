@@ -16,7 +16,7 @@ def get_content_id():
     infohash = request.args.get('infohash')
     # Use requests to fetch data from your JSON service
     response = requests.get(f'{ENGINE_URL}/server/api?api_version=3&method=get_content_id&infohash={infohash}')
-    data = response.json()['result']
+    data = response.json().get('result', {})
     return data
 
 @app.route('/search', methods=['GET'])

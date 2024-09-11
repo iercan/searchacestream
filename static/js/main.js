@@ -72,7 +72,6 @@ document.getElementById('searchForm').addEventListener('submit', function(event)
             const resultTable = document.getElementById('results-table');
             resultTable.hidden = false;
             resultsBody.innerHTML = '';
-            process_img.style.display = 'none';
             if(data.length === 0) {
                 resultsBody.innerHTML = 'No results';
                 return;
@@ -97,6 +96,7 @@ document.getElementById('searchForm').addEventListener('submit', function(event)
                     </tr>`;
                 resultsBody.innerHTML += row;
             });
+            process_img.style.display = 'none';
             refresh_listeners();
         });
 });
