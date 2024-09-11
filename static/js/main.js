@@ -56,6 +56,9 @@ document.getElementById('searchForm').addEventListener('submit', function(event)
     event.preventDefault();
     const query = document.getElementById('query').value;
     const process_img = document.getElementById('process_img');
+    const resultsBody = document.getElementById('results-body');
+    const resultTable = document.getElementById('results-table');
+
     process_img.style.display = 'grid';
     const url = new URL('/search', window.location.origin);
     url.searchParams.append('query', query);
@@ -66,11 +69,14 @@ document.getElementById('searchForm').addEventListener('submit', function(event)
             'Content-Type': 'application/x-www-form-urlencoded',
         }
     })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                resultsBody.innerHTML = 'An error occured while getting data. Error code: ' + response.status ;
+                process_img.style.display = 'none';
+            }
+                return response.json();
+            })
         .then(data => {
-            const resultsBody = document.getElementById('results-body');
-            const resultTable = document.getElementById('results-table');
-            resultTable.hidden = false;
             resultsBody.innerHTML = '';
             if(data.length === 0) {
                 resultsBody.innerHTML = 'No results';
@@ -96,6 +102,7 @@ document.getElementById('searchForm').addEventListener('submit', function(event)
                 resultsBody.innerHTML += row;
             });
             process_img.style.display = 'none';
+            resultTable.hidden = false;
             refresh_listeners();
         });
 });
