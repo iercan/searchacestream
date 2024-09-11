@@ -82,11 +82,8 @@ document.getElementById('searchForm').addEventListener('submit', function(event)
                 resultsBody.innerHTML = 'No results';
             }
             data.forEach(result => {
-                const statusIcon = result.status === 2 ? 'Active' : 'Unstable';
                 const row = `<tr>
                         <td class="px-3 py-4 whitespace-no-wrap border-b border-gray-500">${result.name}</td>
-                        <td class="px-3 py-4 whitespace-no-wrap border-b border-gray-500">${statusIcon}</td>
-                        <td class="px-3 py-4 whitespace-no-wrap border-b border-gray-500">${result.languages}</td>
                         <td class="px-3 py-4 whitespace-no-wrap border-b border-gray-500 flex flex-col sm:flex-row sm:space-x-2">
                             <span title="Play channel" data-infohash="${result.infohash}" data-type="open" class=" action_icon py-1 px-2 rounded focus:outline-none focus:shadow-outline">
                                 <i class="fa-lg fa-solid fa-circle-play"></i>
