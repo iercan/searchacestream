@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">  
     <title>Ace Stream Broadcast Search - Find Content IDs</title>  
     <meta name="description" content="Easily search and discover Ace Stream broadcasts with our user-friendly platform. Find and access content IDs for your favorite live streams and enjoy seamless streaming experiences. Start exploring now!">  
-    
+    <meta name="keywords" content="search, ace stream search, content id search, ace player, p2p stream, broadcast search, ace player search">
     <link rel="icon" href="{{ url_for('static', filename='images/favicon.png') }}" type="image/png">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/tailwind.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='fontawesome/css/all.min.css') }}">
@@ -19,18 +19,25 @@
     </a></div>
     <div style="overflow: auto; height: 100%; width: auto;">
         <div class="flex place-items-center justify-center">
-            <img style="height: 200px; width: 200px;" src="{{ url_for('static', filename='images/icon.png') }}" alt="Ace Stream Searcher">
+            <img style="height: 180px; width: 180px;" src="{{ url_for('static', filename='images/icon.png') }}" alt="Ace Stream Searcher">
+        </div>
+        <div class="flex place-items-center justify-center">
+            <h1 class="text-3xl">Search Ace Streams</h1>
         </div>
         <form id="searchForm" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">  
             <div class="mb-4" style=" width: 70%;  float: left;padding: 10px;">  
-                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="query" type="text" placeholder="Search ace streams...">
+                <input class="shadow appearance-none border rounded-full w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="query" type="text" placeholder="Channel name">
             </div>  
             <div class="flex items-center justify-between" style="padding:10px;">  
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded focus:outline-none focus:shadow-outline" style="width: 100%;" type="submit">  
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded-full focus:outline-none focus:shadow-outline" style="width: 100%;" type="submit">  
                     Search  
                 </button>  
             </div>  
-        </form>  
+        </form>
+        <div id="process_img" class="flex place-items-center justify-centeri" style="display: none">
+            <img  src="{{ url_for('static', filename='images/processing.gif') }}" >
+        </div>
+
         <div id="results" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" style="overflow: auto;">  
             <table class="min-w-full" id="results-table" hidden>  
                 <thead>  

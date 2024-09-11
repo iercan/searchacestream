@@ -11,17 +11,17 @@ ENGINE_URL = os.getenv("ENGINE_URL")
 def home():
     return render_template('index.html')
 
-@app.route('/get_content_id', methods=['POST'])
+@app.route('/get_content_id', methods=['GET'])
 def get_content_id():
-    infohash = request.form.get('infohash')
+    infohash = request.args.get('infohash')
     # Use requests to fetch data from your JSON service
     response = requests.get(f'{ENGINE_URL}/server/api?api_version=3&method=get_content_id&infohash={infohash}')
     data = response.json()['result']
     return data
 
-@app.route('/search', methods=['POST'])
+@app.route('/search', methods=['GET'])
 def search():
-    query = request.form.get('query')
+    query = request.args.get('query')
     # Use requests to fetch data from your JSON service
     response = requests.get(f'{ENGINE_URL}/search?page_size=200&query={query}')
     data = response.json()['result']['results']

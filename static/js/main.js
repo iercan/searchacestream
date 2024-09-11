@@ -1,3 +1,19 @@
+function handle_clipboard(textToCopy, elem, orig_icon_class){
+    navigator.clipboard.writeText(textToCopy)
+        .then(() => {
+            let icon_elem = elem.getElementsByTagName("i")[0]
+            icon_elem.classList.remove(orig_icon_class);
+            icon_elem.classList.add('fa-clipboard-check');
+            setTimeout(() => {
+                icon_elem.classList.remove('fa-clipboard-check');
+                icon_elem.classList.add(orig_icon_class);
+            }, 1000);
+        })
+        .catch(err => {
+            console.error('Failed to copy text: ', err);
+        });
+
+}
 
 function refresh_listeners(){
     let buttons = document.querySelectorAll(".action_icon");
@@ -6,48 +22,32 @@ function refresh_listeners(){
         elem.addEventListener("click", function(event) {
             event.preventDefault();
             const infohash = elem.getAttribute('data-infohash');
-            fetch('/get_content_id', {
-                method: 'POST',
+            let buttonType = elem.getAttribute('data-type');
+
+            if (buttonType == "network"){
+                let pid = Math.floor(Math.random() * 10000) + 1;
+                handle_clipboard("http://127.0.0.1:6878/ace/getstream?infohash=" + infohash + "&pid=" + pid, elem, "fa-file-video");
+                return;
+            }
+
+            const url = new URL('/get_content_id', window.location.origin);
+            url.searchParams.append('infohash', infohash);
+            fetch(url, {
+                method: 'GET',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: `infohash=${infohash}`
+                }
             })
                 .then(response => response.json())
                 .then(data => {
-                    let textToCopy = '';
-                    let pid = 1;
-                    let buttonType = elem.getAttribute('data-type');
-                    let orig_icon_class = 'fa-clipboard';
-                    if (buttonType == "network"){
-                        pid = Math.floor(Math.random() * 10000) + 1;
-                        textToCopy = "http://127.0.0.1:6878/ace/getstream?id=" + data.content_id + "&pid=" + pid;
-                        orig_icon_class = 'fa-file-video'
-                    }
-                    else if (buttonType == "open"){
-
+                    if (buttonType == "open"){
                         window.open("acestream://" + data.content_id, '_blank');
                         return;
-
                     }
                     else{
                         textToCopy = data.content_id;
+                        handle_clipboard(data.content_id, elem, "fa-clipboard");
                     }
-                    navigator.clipboard.writeText(textToCopy)
-                        .then(() => {
-                            let icon_elem = elem.getElementsByTagName("i")[0]
-                            icon_elem.classList.remove(orig_icon_class);
-                            icon_elem.classList.add('fa-clipboard-check');
-                            setTimeout(() => {
-                                icon_elem.classList.remove('fa-clipboard-check');
-                                icon_elem.classList.add(orig_icon_class);
-                            }, 2000); // Reset after 2 seconds
-                        })
-                        .catch(err => {
-                            console.error('Failed to copy text: ', err);
-                        });
-                    //const resultsBody = elem.parentElement;
-                    //resultsBody.innerHTML = data.content_id;
                 });
         });
     });
@@ -55,12 +55,16 @@ function refresh_listeners(){
 document.getElementById('searchForm').addEventListener('submit', function(event) {
     event.preventDefault();
     const query = document.getElementById('query').value;
-    fetch('/search', {
-        method: 'POST',
+    const process_img = document.getElementById('process_img');
+    process_img.style.display = 'grid';
+    const url = new URL('/search', window.location.origin);
+    url.searchParams.append('query', query);
+
+    fetch(url, {
+        method: 'GET',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: `query=${query}`
+        }
     })
         .then(response => response.json())
         .then(data => {
@@ -68,6 +72,7 @@ document.getElementById('searchForm').addEventListener('submit', function(event)
             const resultTable = document.getElementById('results-table');
             resultTable.hidden = false;
             resultsBody.innerHTML = '';
+            process_img.style.display = 'none';
             if(data.length === 0) {
                 resultsBody.innerHTML = 'No results';
                 return;
