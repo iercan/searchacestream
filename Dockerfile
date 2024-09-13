@@ -15,6 +15,11 @@ COPY tailwind.input.css .
 COPY static static
 COPY templates templates
 
+RUN curl -sLO https://use.fontawesome.com/releases/v6.6.0/fontawesome-free-6.6.0-web.zip && \
+    unzip fontawesome-free-6.6.0-web.zip && \
+    mv fontawesome-free-6.6.0-web static/fontawesome && \
+    rm fontawesome-free-6.6.0-web.zip
+
 RUN ./tailwindcss -i tailwind.input.css -o ./static/css/tailwind.css -c tailwind.config.js --minify
 
 
