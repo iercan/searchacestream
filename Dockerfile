@@ -8,6 +8,12 @@ RUN curl -sLO https://github.com/tailwindlabs/tailwindcss/releases/download/v3.4
     chmod +x tailwindcss-linux-x64 && \
     mv tailwindcss-linux-x64 tailwindcss
 
+RUN curl -sLO https://use.fontawesome.com/releases/v6.6.0/fontawesome-free-6.6.0-web.zip && \
+    unzip fontawesome-free-6.6.0-web.zip && \
+    mkdir static && \
+    mv fontawesome-free-6.6.0-web static/fontawesome && \
+    rm fontawesome-free-6.6.0-web.zip
+
 COPY run.sh .
 COPY app.py .
 COPY tailwind.config.js .
@@ -15,10 +21,6 @@ COPY tailwind.input.css .
 COPY static static
 COPY templates templates
 
-RUN curl -sLO https://use.fontawesome.com/releases/v6.6.0/fontawesome-free-6.6.0-web.zip && \
-    unzip fontawesome-free-6.6.0-web.zip && \
-    mv fontawesome-free-6.6.0-web static/fontawesome && \
-    rm fontawesome-free-6.6.0-web.zip
 
 RUN ./tailwindcss -i tailwind.input.css -o ./static/css/tailwind.css -c tailwind.config.js --minify
 
