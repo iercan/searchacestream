@@ -5,9 +5,6 @@ import mysql.connector
 from flask import Flask, request, jsonify, render_template
 app = Flask(__name__, template_folder="templates")
 
-
-ENGINE_URL = os.getenv("ENGINE_URL")
-
 def get_db_connection():
     # Replace these with your actual database connection details
     db_config = {
@@ -21,14 +18,6 @@ def get_db_connection():
 @app.route('/')
 def home():
     return render_template('index.html')
-
-@app.route('/get_content_id', methods=['GET'])
-def get_content_id():
-    infohash = request.args.get('infohash')
-    # Use requests to fetch data from your JSON service
-    response = requests.get(f'{ENGINE_URL}/server/api?api_version=3&method=get_content_id&infohash={infohash}')
-    data = response.json().get('result', {})
-    return data
 
 @app.route('/search', methods=['GET'])
 def search():

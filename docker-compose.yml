@@ -8,5 +8,3 @@ services:
       - nginx_network
     build: .
     container_name: acesearch
-    environment: 
-      - ENGINE_URL=http://acestreamengine:6878
