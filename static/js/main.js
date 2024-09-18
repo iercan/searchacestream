@@ -1,10 +1,12 @@
+
+let clipboard = new ClipboardJS('.copy_icon');
+
 document.getElementById('searchForm').addEventListener('submit', function(event) {
     event.preventDefault();
     const query = document.getElementById('query').value;
     const process_img = document.getElementById('process_img');
     const resultsBody = document.getElementById('results-body');
     const resultTable = document.getElementById('results-table');
-    let clipboard = new ClipboardJS('.copy_icon');
 
     process_img.style.display = 'grid';
     const url = new URL('/search', window.location.origin);
@@ -32,7 +34,8 @@ document.getElementById('searchForm').addEventListener('submit', function(event)
                 let pid = Math.floor(Math.random() * 10000) + 1;
                 const row = `<tr>
                         <td class="px-3 py-4 whitespace-no-wrap border-b border-gray-500">${result.name}</td>
-                        <td class="px-3 py-4 whitespace-no-wrap border-b border-gray-500 flex flex-col sm:flex-row sm:space-x-2">
+                        <td class="px-3 py-4 whitespace-no-wrap border-b border-gray-500 sm:space-x-2">
+                            <span>${result.content_id}</span>
                             <a title="Play channel" href="acestream://${result.content_id}" target="_blank" class="action_icon py-1 px-2 rounded focus:outline-none focus:shadow-outline">
                                 <i class="fa-lg fa-solid fa-circle-play"></i>
                             </a>

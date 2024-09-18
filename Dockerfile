@@ -27,14 +27,11 @@ RUN curl -sLO https://github.com/zenorocha/clipboard.js/archive/refs/tags/v2.0.1
 COPY run.sh .
 COPY tailwind.config.js .
 COPY tailwind.input.css .
-COPY static static
 COPY app.py .
 COPY templates templates
+COPY static static
 
 
 RUN ./tailwindcss -i tailwind.input.css -o ./static/css/tailwind.css -c tailwind.config.js --minify
-
-
-ENV ENGINE_URL=http://127.0.0.1:6878
 
 CMD ["./run.sh"]

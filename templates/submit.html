@@ -3,7 +3,7 @@
 <head>  
     <meta charset="UTF-8">  
     <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-    <title>Ace Stream Broadcast Search - Find Content IDs</title>  
+    <title>Ace Stream Broadcast Search - Submtit Content IDs</title>  
     <meta name="description" content="Easily search and discover Ace Stream broadcasts with our user-friendly platform. Find and access content IDs for your favorite live streams and enjoy seamless streaming experiences. Start exploring now!">  
     <meta name="keywords" content="search, ace stream search, content id search, ace player, p2p stream, broadcast search, ace player search">
     <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/png">
@@ -22,10 +22,9 @@
 </head>  
 <body class="flex items-center justify-center h-screen bg-white">
     <div style="overflow: auto;"> 
-        <a href="https://github.com/iercan/searchacestream" target="_blank" class="absolute top-4 right-4 text-gray-600 hover:text-black">
-            <i class="fa-xl fa-brands fa-github"></i>
-        </a>
-    </div>
+    <a href="https://github.com/iercan/searchacestream" target="_blank" class="absolute top-4 right-4 text-gray-600 hover:text-black">
+    <i class="fa-xl fa-brands fa-github"></i>
+    </a></div>
     <div style="height: 100%; width: auto;">
         <div class="flex place-items-center justify-center">
             <a href="/">
@@ -33,23 +32,34 @@
             </a>
         </div>
         <div class="flex place-items-center justify-center">
-            <h1 class="text-3xl">Search Ace Streams</h1>
+            <h1 class="text-3xl">Submit Content ID</h1>
         </div>
-        <form id="searchForm" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">  
-            <div class="mb-4" style=" width: 70%;  float: left;padding: 10px;">  
-                <input class="shadow appearance-none border rounded-full w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="query" type="text" placeholder="Channel name">
-            </div>  
-            <div class="flex items-center justify-between" style="padding:10px;">  
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded-full focus:outline-none focus:shadow-outline" style="width: 100%;" type="submit">  
-                    Search  
-                </button>  
-            </div>  
+        <form id="submitForm" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <div class="mb-4 flex items-center" style="padding: 10px;">
+                <label for="contentId" class="mr-4 text-gray-700">Content ID:</label>
+                <input class="shadow appearance-none border rounded-full w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="contentId" type="text" placeholder="Content ID">
+            </div>
+            <div class="mb-4 flex items-center" style="padding: 10px;">
+                <label for="keywords" class="mr-4 text-gray-700">Keywords:</label>
+                <input class="shadow appearance-none border rounded-full w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="keywords" type="text" placeholder="Keywords">
+            </div>
+            <div class="flex place-items-center justify-center" style="padding: 10px;">
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded-full focus:outline-none focus:shadow-outline" style="width: 40%;" type="submit">
+                    Submit
+                </button>
+            </div>
+            <div id="submit_message_div" class="flex place-items-center justify-center" style="padding: 10px; display: none;">
+                <span id="submit_message">Saved</span>
+            </div>
+            <div id="after_submit_div" class="flex place-items-center justify-center" style="padding: 10px; display: none;">
+                <a href="/" class="underline text-blue-700" >Return Home Page</a>
+            </div>
         </form>
         <div id="process_img" class="flex place-items-center justify-centeri" style="display: none">
             <img  src="{{ url_for('static', filename='images/processing.gif') }}" >
         </div>
 
-        <div id="results" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" style="overflow: auto;">  
+            <div id="results" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" style="overflow: auto;">  
             <table class="min-w-full" id="results-table" hidden>  
                 <thead>  
                     <tr>  
@@ -61,16 +71,17 @@
                     <!-- Results will be inserted here -->  
                 </tbody>  
             </table>
-            <div class="bg-white pt-6">
+            <div class="bg-white">
                 <span class="text-xs">
-                    This website is designed solely to search for active Ace Stream broadcasts and is not involved in streaming them.<br>
-                    You can submit a content ID <a href="/submit" class="underline text-blue-700">here</a> to include them search results.
+                    Submit a content ID to benefit others. Select keywords wisely for easy discovery. <br>
+                    You can submit a content id that is already listed with different keywords. <br>
+                    Manually added content IDs will be named as "Submitted manually" and <br>
+                    have a limited lifespan and will be removed after some period.<br>
                 </span>
             </div>
         </div>  
     </div>  
-    <script src="{{ url_for('static', filename='clipboard/dist/clipboard.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>  
+    <script src="{{ url_for('static', filename='js/submit.js') }}"></script>  
 </body>  
 </html>  
 
