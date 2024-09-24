@@ -10,25 +10,16 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/tailwind.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='fontawesome/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FPNCQHC7WK"></script>
-    <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'G-FPNCQHC7WK');
-    </script>
 </head>  
 <body class="flex items-center justify-center h-screen bg-white">
     <div style="overflow: auto;"> 
     <a href="https://github.com/iercan/searchacestream" target="_blank" class="absolute top-4 right-4 text-gray-600 hover:text-black">
     <i class="fa-xl fa-brands fa-github"></i>
     </a></div>
-    <div style="height: 100%; width: auto;">
+    <div style="height: 100%; width: auto; display: grid;">
         <div class="flex place-items-center justify-center">
             <a href="/">
-                <img style="height: 180px; width: 180px;" src="{{ url_for('static', filename='images/icon.png') }}" alt="Ace Stream Searcher">
+                <img width="200" height="200" src="{{ url_for('static', filename='images/icon.png') }}" alt="Ace Stream Searcher">
             </a>
         </div>
         <div class="flex place-items-center justify-center">
@@ -73,15 +64,25 @@
             </table>
             <div class="bg-white">
                 <span class="text-xs">
-                    Submit a content ID to benefit others. Select keywords wisely for easy discovery. <br>
-                    You can submit a content id that is already listed with different keywords. <br>
-                    Manually added content IDs will be named as "Submitted manually" and <br>
-                    have a limited lifespan and will be removed after some period.<br>
+                    Submit a content ID with relevant keywords for easy discovery. <br>
+                    You can resubmit an existing content ID with new keywords. <br>
+                    Manually added content IDs will be named "Submitted manually" and <br>
+                    will be removed after a certain period.
                 </span>
             </div>
         </div>  
     </div>  
-    <script src="{{ url_for('static', filename='js/submit.js') }}"></script>  
+    <script src="{{ url_for('static', filename='js/submit.js') }}"></script> 
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FPNCQHC7WK"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-FPNCQHC7WK');
+    </script>
+
 </body>  
 </html>  
 

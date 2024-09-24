@@ -8,3 +8,4 @@ services:
       - nginx_network
     build: .
     container_name: acesearch
+    restart: unless-stopped 

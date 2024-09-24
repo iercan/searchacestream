@@ -10,15 +10,6 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/tailwind.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='fontawesome/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FPNCQHC7WK"></script>
-    <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'G-FPNCQHC7WK');
-    </script>
 </head>  
 <body class="flex items-center justify-center h-screen bg-white">
     <div style="overflow: auto;"> 
@@ -26,10 +17,10 @@
             <i class="fa-xl fa-brands fa-github"></i>
         </a>
     </div>
-    <div style="height: 100%; width: auto;">
+    <div style="height: 100%; width: auto; display: grid;">
         <div class="flex place-items-center justify-center">
             <a href="/">
-                <img style="height: 180px; width: 180px;" src="{{ url_for('static', filename='images/icon.png') }}" alt="Ace Stream Searcher">
+                <img width="200" height="200" src="{{ url_for('static', filename='images/icon.png') }}" alt="Ace Stream Searcher">
             </a>
         </div>
         <div class="flex place-items-center justify-center">
@@ -63,14 +54,25 @@
             </table>
             <div class="bg-white pt-6">
                 <span class="text-xs">
-                    This website is designed solely to search for active Ace Stream broadcasts and is not involved in streaming them.<br>
-                    You can submit a content ID <a href="/submit" class="underline text-blue-700">here</a> to include them search results.
+                    This website is designed solely to search for active Ace Stream broadcasts and 
+                    <br>is not involved in streaming them.<br><br>
+                    <a href="/submit" class="underline text-blue-700">
+                    Submit any content ID</a> to include it in search results.
                 </span>
             </div>
         </div>  
     </div>  
     <script src="{{ url_for('static', filename='clipboard/dist/clipboard.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>  
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FPNCQHC7WK"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-FPNCQHC7WK');
+    </script>
 </body>  
 </html>  
 
