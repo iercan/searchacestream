@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Ace Stream{% endblock %}</title>
+    <meta name="description" content="Easily search and discover Ace Stream broadcasts with our user-friendly platform. Find and access content IDs for your favorite live streams and enjoy seamless streaming experiences. Start exploring now!">
+    <meta name="keywords" content="search, ace stream search, content id search, ace player, p2p stream, broadcast search, ace player search">
+    <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/png">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tailwind.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='fontawesome/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="flex items-center justify-center h-screen bg-white">
+    <div style="overflow: auto;">
+        <a href="https://github.com/iercan/searchacestream" target="_blank" class="absolute top-4 right-4 text-gray-600 hover:text-black">
+            <i class="fa-xl fa-brands fa-github"></i>
+        </a>
+    </div>
+    <div style="height: 100%; width: auto; display: grid;">
+        <div class="flex place-items-center justify-center">
+            <a href="/">
+                <img width="200" height="200" src="{{ url_for('static', filename='images/icon.png') }}" alt="Ace Stream Searcher">
+            </a>
+        </div>
+        {% block content %}
+        <!-- Child templates will insert content here -->
+        {% endblock %}
+    </div>
+    {% block scripts %}
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FPNCQHC7WK"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FPNCQHC7WK');
+    </script>
+    {% endblock %}
+</body>
+</html>
+

@@ -1,9 +1,7 @@
 function show_message(text){
     const div = document.getElementById('submit_message_div');
-    const after_submit_div = document.getElementById('after_submit_div');
     const message_span = document.getElementById('submit_message');
     div.style.display = 'flex';
-    after_submit_div.style.display = 'flex';
     message_span.innerHTML = text;
     setTimeout(() => {
         div.style.display = 'none';

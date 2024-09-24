@@ -1,78 +1,50 @@
-<!DOCTYPE html>  
-<html lang="en">  
-<head>  
-    <meta charset="UTF-8">  
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-    <title>Ace Stream Broadcast Search - Find Content IDs</title>  
-    <meta name="description" content="Easily search and discover Ace Stream broadcasts with our user-friendly platform. Find and access content IDs for your favorite live streams and enjoy seamless streaming experiences. Start exploring now!">  
-    <meta name="keywords" content="search, ace stream search, content id search, ace player, p2p stream, broadcast search, ace player search">
-    <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/png">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/tailwind.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='fontawesome/css/all.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-</head>  
-<body class="flex items-center justify-center h-screen bg-white">
-    <div style="overflow: auto;"> 
-        <a href="https://github.com/iercan/searchacestream" target="_blank" class="absolute top-4 right-4 text-gray-600 hover:text-black">
-            <i class="fa-xl fa-brands fa-github"></i>
-        </a>
+{% extends "base.html" %}
+
+{% block title %}Ace Stream Broadcast Search - Find Content IDs{% endblock %}
+
+{% block content %}
+<div class="flex place-items-center justify-center">
+    <h1 class="text-3xl">Search Ace Streams</h1>
+</div>
+<form id="searchForm" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <div class="mb-4" style="width: 70%; float: left; padding: 10px;">
+        <input class="shadow appearance-none border rounded-full w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="query" type="text" placeholder="Channel name">
     </div>
-    <div style="height: 100%; width: auto; display: grid;">
-        <div class="flex place-items-center justify-center">
-            <a href="/">
-                <img width="200" height="200" src="{{ url_for('static', filename='images/icon.png') }}" alt="Ace Stream Searcher">
-            </a>
-        </div>
-        <div class="flex place-items-center justify-center">
-            <h1 class="text-3xl">Search Ace Streams</h1>
-        </div>
-        <form id="searchForm" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">  
-            <div class="mb-4" style=" width: 70%;  float: left;padding: 10px;">  
-                <input class="shadow appearance-none border rounded-full w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="query" type="text" placeholder="Channel name">
-            </div>  
-            <div class="flex items-center justify-between" style="padding:10px;">  
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded-full focus:outline-none focus:shadow-outline" style="width: 100%;" type="submit">  
-                    Search  
-                </button>  
-            </div>  
-        </form>
-        <div id="process_img" class="flex place-items-center justify-centeri" style="display: none">
-            <img  src="{{ url_for('static', filename='images/processing.gif') }}" >
-        </div>
+    <div class="flex items-center justify-between" style="padding: 10px;">
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded-full focus:outline-none focus:shadow-outline" style="width: 100%;" type="submit">
+            Search
+        </button>
+    </div>
+</form>
+<div id="process_img" class="flex place-items-center justify-centeri" style="display: none">
+    <img src="{{ url_for('static', filename='images/processing.gif') }}">
+</div>
+<div id="results" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" style="overflow: auto;">
+    <table class="min-w-full" id="results-table" hidden>
+        <thead>
+            <tr>
+                <th class="px-3 py-3 border-b-2 border-gray-300 text-left leading-4 text-blue-500 tracking-wider">Name</th>
+                <th class="px-3 py-3 border-b-2 border-gray-300 text-left leading-4 text-blue-500 tracking-wider">Content ID</th>
+            </tr>
+        </thead>
+        <tbody id="results-body">
+            <!-- Results will be inserted here -->
+        </tbody>
+    </table>
+    <div class="bg-white pt-6">
+        <span class="text-xs">
+            This website is designed solely to search for active Ace Stream broadcasts and
+            <br>is not involved in streaming them.<br><br>
+            <a href="/submit" class="underline text-blue-700">
+            Submit any content ID</a> to include it in search results.
+        </span>
+    </div>
+</div>
+{% endblock %}
 
-        <div id="results" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" style="overflow: auto;">  
-            <table class="min-w-full" id="results-table" hidden>  
-                <thead>  
-                    <tr>  
-                        <th class="px-3 py-3 border-b-2 border-gray-300 text-left leading-4 text-blue-500 tracking-wider">Name</th>  
-                        <th class="px-3 py-3 border-b-2 border-gray-300 text-left leading-4 text-blue-500 tracking-wider">Content ID</th>
-                    </tr>  
-                </thead>  
-                <tbody id="results-body">  
-                    <!-- Results will be inserted here -->  
-                </tbody>  
-            </table>
-            <div class="bg-white pt-6">
-                <span class="text-xs">
-                    This website is designed solely to search for active Ace Stream broadcasts and 
-                    <br>is not involved in streaming them.<br><br>
-                    <a href="/submit" class="underline text-blue-700">
-                    Submit any content ID</a> to include it in search results.
-                </span>
-            </div>
-        </div>  
-    </div>  
-    <script src="{{ url_for('static', filename='clipboard/dist/clipboard.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FPNCQHC7WK"></script>
-    <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'G-FPNCQHC7WK');
-    </script>
-</body>  
-</html>  
+{% block scripts %}
+{{ super() }} <!-- Includes scripts from the parent block -->
+<script src="{{ url_for('static', filename='clipboard/dist/clipboard.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+{% endblock %}
 
