@@ -20,27 +20,22 @@ def fetch_data():
     return response.json()
 
 def create_playlist(data):
-    ace_content = ["#EXTM3U"]
-    vlc_content = ["#EXTM3U"]
+    content = ["#EXTM3U"]
 
-    ace_file = '/root/playlists/playlist_ace.m3u8'
-    vlc_file = '/root/playlists/playlist_vlc.m3u8'
+    file_path = '/root/playlists/playlist.m3u8'
     pid=1
 
     for entry in data:
-        name = entry[1]
-        content_id = entry[2]
-        vlc_content.append(f"#EXTINF:-1,{name}")
-        vlc_content.append(f"http://127.0.0.1:6878/ace/getstream?id={content_id}&pid={pid}")
-        ace_content.append(f"#EXTINF:-1,{name}")
-        ace_content.append(f"acestream://{content_id}")
+        name = entry.get('name')
+        infohash = entry.get('infohash')
+        content.append(f"#EXTINF:-1,{name}")
+        content.append(f"http://127.0.0.1:6878/ace/getstream?infohash={infohash}&pid={pid}")
         pid += 1
 
-    with open(ace_file, 'w') as file:
-        file.write("\n".join(ace_content))
+    with open(file_path, 'w') as file:
+        file.write("\n".join(content))
 
-    with open(vlc_file, 'w') as file:
-        file.write("\n".join(vlc_content))
+        print(f"Playlist saved to {file_path}")
 
 
 
@@ -86,7 +81,7 @@ def save_to_database(data):
     cursor.close()
     conn.close()
     print("Data successfully fetched and stored in database.")
-    return bulk_data
+
 
 def remove_expired_streams():
 
@@ -117,8 +112,8 @@ def remove_expired_streams():
 
 def main():
     data = fetch_data()
-    bulk_data = save_to_database(data)
-    create_playlist(bulk_data)
+    save_to_database(data)
+    create_playlist(data)
     remove_expired_streams()
 
 if __name__ == "__main__":

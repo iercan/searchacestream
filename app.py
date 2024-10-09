@@ -127,19 +127,14 @@ def submit_form():
 
 @app.route('/playlist', methods=['GET'])
 def download_playlist():
-    player = request.args.get('player')
-    if player == 'vlc':
-        file_path = '/app/playlists/playlist_vlc.m3u8'
-    else:
-        file_path = '/app/playlists/playlist_ace.m3u8'
-
+    file_path = '/app/playlists/playlist.m3u8'
 
     # Read the file content
     with open(file_path, 'r') as file:
         text_content = file.read()
 
     # Return the content with the correct MIME type
-    return Response(text_content, mimetype='text/plain')
+    return Response(text_content, mimetype='application/x-mpegURL')
 
 gunicorn_logger = logging.getLogger('gunicorn.error')
 app.logger.handlers = gunicorn_logger.handlers

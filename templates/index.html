@@ -19,7 +19,7 @@
 <div id="process_img" class="flex place-items-center justify-centeri" style="display: none">
     <img src="{{ url_for('static', filename='images/processing.gif') }}">
 </div>
-<div id="results" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" style="overflow: auto;">
+<div id="results" class="bg-white shadow-md rounded px-8 pt-6 pb-1 mb-2" style="overflow: auto;">
     <table class="min-w-full" id="results-table" hidden>
         <thead>
             <tr>
@@ -31,17 +31,20 @@
             <!-- Results will be inserted here -->
         </tbody>
     </table>
-    <div class="bg-white pt-6">
-        <span class="text-xs">
-            This website is designed solely to search for active Ace Stream broadcasts and
-            <br>is not involved in streaming them.<br><br>
+    <div class="bg-white pt-6 pb-1">
+        <p >You can also;<br>
             <a href="/submit" class="underline text-blue-700">
                 Submit any content ID</a> to include it in search results.
             <br>
             <a href="/playlist" target="_blank" class="underline text-blue-700">
-            Download</a> all public channels as playlist.
+            Download</a> playlist contains all public channels.
+        <br><br><br><br>
+
+        </p>
+        <p style="font-size: 0.50rem;">
+            This website is designed solely to search for active Ace Stream broadcasts and is not involved in streaming them.
             
-        </span>
+            </p>
     </div>
 </div>
 {% endblock %}
