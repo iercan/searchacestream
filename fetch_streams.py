@@ -19,6 +19,31 @@ def fetch_data():
         raise Exception(f"Failed to fetch data: {response.status_code}")
     return response.json()
 
+def create_playlist(data):
+    ace_content = ["#EXTM3U"]
+    vlc_content = ["#EXTM3U"]
+
+    ace_file = '/root/playlists/playlist_ace.m3u8'
+    vlc_file = '/root/playlists/playlist_vlc.m3u8'
+    pid=1
+
+    for entry in data:
+        name = entry[1]
+        content_id = entry[2]
+        vlc_content.append(f"#EXTINF:-1,{name}")
+        vlc_content.append(f"http://127.0.0.1:6878/ace/getstream?id={content_id}&pid={pid}")
+        ace_content.append(f"#EXTINF:-1,{name}")
+        ace_content.append(f"acestream://{content_id}")
+        pid += 1
+
+    with open(ace_file, 'w') as file:
+        file.write("\n".join(ace_content))
+
+    with open(vlc_file, 'w') as file:
+        file.write("\n".join(vlc_content))
+
+
+
 def save_to_database(data):
 
     # Establish a database connection
@@ -61,6 +86,7 @@ def save_to_database(data):
     cursor.close()
     conn.close()
     print("Data successfully fetched and stored in database.")
+    return bulk_data
 
 def remove_expired_streams():
 
@@ -69,7 +95,7 @@ def remove_expired_streams():
     cursor = connection.cursor()
 
     # Calculate the cutoff time
-    cutoff_time = datetime.now() - timedelta(hours=48)
+    cutoff_time = datetime.now() - timedelta(hours=72)
 
     # Prepare the SQL query to delete entries
     query = "DELETE FROM streams_submitted WHERE inserted_at < %s"
@@ -84,11 +110,15 @@ def remove_expired_streams():
     cursor.close()
     connection.close()
 
-    print("Streams older than 48 hours have been removed.")
+    print("Streams older than 72 hours have been removed.")
+
+
+
 
 def main():
     data = fetch_data()
-    save_to_database(data)
+    bulk_data = save_to_database(data)
+    create_playlist(bulk_data)
     remove_expired_streams()
 
 if __name__ == "__main__":

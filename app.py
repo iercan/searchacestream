@@ -4,7 +4,7 @@ import os
 import mysql.connector
 from mysql.connector import Error
 from datetime import datetime
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, send_file, Response
 app = Flask(__name__, template_folder="templates")
 
 def get_db_connection():
@@ -124,6 +124,22 @@ def submit_form():
             cursor.close()
             connection.close()
 
+
+@app.route('/playlist', methods=['GET'])
+def download_playlist():
+    player = request.args.get('player')
+    if player == 'vlc':
+        file_path = '/app/playlists/playlist_vlc.m3u8'
+    else:
+        file_path = '/app/playlists/playlist_ace.m3u8'
+
+
+    # Read the file content
+    with open(file_path, 'r') as file:
+        text_content = file.read()
+
+    # Return the content with the correct MIME type
+    return Response(text_content, mimetype='text/plain')
 
 gunicorn_logger = logging.getLogger('gunicorn.error')
 app.logger.handlers = gunicorn_logger.handlers

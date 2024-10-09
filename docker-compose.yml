@@ -8,4 +8,6 @@ services:
       - nginx_network
     build: .
     container_name: acesearch
-    restart: unless-stopped 
+    restart: unless-stopped
+    volumes:
+      - /root/playlists:/app/playlists
